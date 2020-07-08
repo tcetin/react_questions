@@ -169,3 +169,45 @@ if(plusButton) {
   plusButton.click();
 }
 console.log(document.getElementById('root').outerHTML)
+
+//5. Image Gallery App
+
+
+class ImageGallery extends React.Component {
+  constructor(props){
+    super(props);
+      this.state = {
+        links:[]
+      }
+    this.removeLink = this.removeLink.bind(this);
+  }
+  componentDidMount(){
+    this.setState({links:this.props.links});
+  }
+  removeLink(value){
+    let newLinks = this.state.links.filter((link)=>link!==value);
+    this.setState({links:newLinks});
+  }
+  render() {
+    return (
+      <div>
+      {this.state.links.map((link,index)=>
+        <div className="image" key={index}>
+          <img src={link}/>
+          <button onClick={()=>this.removeLink(link)} className="remove">X</button>
+        </div>
+      )}
+
+    </div>
+    );
+  }
+}
+
+document.body.innerHTML = "<div id='root'> </div>";
+  
+const rootElement = document.getElementById("root");
+const links = ["https://goo.gl/kjzfbE", "https://goo.gl/d2JncW"];
+ReactDOM.render(<ImageGallery links={ links } />,
+                rootElement);
+document.querySelectorAll('.remove')[0].click();
+console.log(rootElement.innerHTML);
