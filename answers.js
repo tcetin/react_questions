@@ -116,3 +116,56 @@ ReactDOM.render(<App />, rootElement);
 document.querySelector("input").value = "John Doe";
 document.querySelector("button").click();
 setTimeout(() => console.log(document.getElementById("root").innerHTML));
+
+
+
+//4.Grocery App
+const Product = props => {
+  const [votes,setVotes]=React.useState(props.product.votes);
+  const plus = () => {
+    // Call props.onVote to increase the vote count for this product
+    setVotes(votes+1);
+  };
+  const minus = () => {
+    // Call props.onVote to decrease the vote count for this product
+    setVotes(votes-1);
+  };
+  return (
+    <li>
+      <span>{props.product.name}</span> - <span>votes: {votes} </span>
+      <button onClick={plus}>+</button>{" "}
+      <button onClick={minus}>-</button>
+    </li>
+  );
+};
+
+const GroceryApp = (props) => {
+  let [products, setProducts] = React.useState(props.products);
+  const onVote = (dir, index) => {
+    // Update the products array accordingly ...
+  };
+
+  return (
+    <ul>
+      {products.map((product)=>
+        <Product product={product}/>
+      )}
+      {/* Render an array of products, which should call onVote when + or - is clicked */}
+    </ul>
+  );
+}
+
+document.body.innerHTML = "<div id='root'></div>"; 
+
+ReactDOM.render(<GroceryApp
+  products={[
+    { name: "Oranges", votes: 0 },
+    { name: "Bananas", votes: 0 }
+  ]}
+/>, document.getElementById('root'));
+
+let plusButton = document.querySelector("ul > li > button");
+if(plusButton) {
+  plusButton.click();
+}
+console.log(document.getElementById('root').outerHTML)
